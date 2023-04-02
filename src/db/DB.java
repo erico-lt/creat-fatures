@@ -3,6 +3,7 @@ package db;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.Properties;
 
 public class DB {
@@ -21,6 +22,38 @@ public class DB {
 
         }
         return conn;
+    }   
+
+    public static void insertSeller(PreparedStatement ps, String date) {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/YYYY");
+        try {
+           ps = getConnection().prepareStatement("INSERT INTO seller " + 
+           "(Name, Email, BirthDate, BaseSalary, DepartamentId)"
+            + "VALUE (?,?,?,?,?)");
+
+           ps.setString(1, "Erico");
+           ps.setString(2, "erico.blp@gmail.com");
+           ps.setDate(3, new java.sql.Date(sdf.parse(date).getTime()));
+           ps.setDouble(4, 3500);
+           ps.setInt(5, 2);
+
+           int value = ps.executeUpdate();
+           System.out.println("rows affected: " + value);
+
+        } catch (Exception e) {
+            throw new DbException(e.getMessage());
+        }
+        
+    }
+
+    public static Properties loadProperties() {
+        try (FileInputStream fs = new FileInputStream("db.properties")) {
+            Properties props = new Properties();
+            props.load(fs);
+            return props;
+        } catch (IOException erro) {
+            throw new DbException(erro.getMessage());
+        }
     }
 
     public static void closeConnection() {
@@ -33,16 +66,6 @@ public class DB {
             }
         }
 
-    }
-
-    public static Properties loadProperties() {
-        try (FileInputStream fs = new FileInputStream("db.properties")) {
-            Properties props = new Properties();
-            props.load(fs);
-            return props;
-        } catch (IOException erro) {
-            throw new DbException(erro.getMessage());
-        }
     }
 
     public static void closeStatment(Statement st) {
