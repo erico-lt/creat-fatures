@@ -24,6 +24,23 @@ public class DB {
         return conn;
     }   
 
+    public static void creatTableProduct() {
+       String sql =  "CREATE TABLE productos("
+        + "id INT(4) NOT NULL AUTO_INCREMENT PRIMARY KEY,"
+        + "nome VARCHAR(20) NOT NULL," 
+        + "decricao VARCHAR(220) NOT NULL,"
+        + "preco DECIMAL(10,2) NOT NULL);";
+        try {
+            Statement stm = getConnection().createStatement();
+            stm.executeUpdate(sql);
+            System.out.println("Table create success");                         
+            stm.close();            
+        } catch (SQLException e) {
+            throw new DbException(e.getMessage());
+        }
+        
+    }
+
     public static void insertSeller(PreparedStatement ps, String date) {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/YYYY");
         try {
