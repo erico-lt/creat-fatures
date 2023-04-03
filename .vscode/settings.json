@@ -14,8 +14,8 @@
             "server": "localhost",
             "port": 3306,
             "driver": "MySQL",
-            "name": "serer_course",
-            "database": "course",
+            "name": "projectfactures",
+            "database": "projectfactures",
             "username": "root",
             "password": "flic"
         }

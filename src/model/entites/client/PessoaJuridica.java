@@ -12,6 +12,10 @@ public class PessoaJuridica extends Clients{
         this.setInscEstadual(inscEstadual);        
     }
 
+    public PessoaJuridica (Integer cod, String name) {
+        super(cod, name);
+    }
+
     public Long getCnpj() {
         return cnpj;
     }

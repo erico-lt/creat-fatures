@@ -2,6 +2,7 @@ package model;
 
 import java.util.Scanner;
 
+import db.DB;
 import model.entites.Clients;
 import model.entites.Store;
 import model.entites.client.PessoaFisica;
@@ -10,6 +11,8 @@ import model.exception.StoreException;
 import model.services.MethodOfPayment;
 
 public class UI {
+
+    private static final Integer adm = 0;
 
     public static void clearScreen() {
         System.out.print("\033[H\033[2J");
@@ -21,15 +24,22 @@ public class UI {
         System.out.println(store.toString());
         System.out.println("[1] login:");
         System.out.println("[2] for register:");
-        int option = input.nextInt();
+        Integer option = input.nextInt();
         input.nextLine();
+        System.out.println("Case you are adm, send cod: ");
+        Integer cod_clientverific = input.nextInt();
+        if (cod_clientverific.equals(adm)) {
+            storeOptions(store, input);
+        }
         if (option == 1) {
             clearScreen();
-            System.out.println(store.toString());            
+            System.out.println(store.toString());
             System.out.print("Type client code: ");
             Integer cod_Client = input.nextInt();
+
             Clients client = store.getClient(cod_Client);
             store.clientExist(client.getCodCliente());
+
             firstPage(store, input, client);
         } else {
             clearScreen();
@@ -107,7 +117,7 @@ public class UI {
                     purchaseOrOrder(2, store, input, client);
                 case 2:
                     clearScreen();
-                    System.out.println("Itens in you order");                    
+                    System.out.println("Itens in you order");
                     store.viewItenOfClient(client);
                     System.out.print("Do you want to see the payment method now? [S/N] ");
                     resp = input.next().charAt(0);
@@ -133,14 +143,16 @@ public class UI {
                     if (resp == 's' || resp == 'S') {
                         System.out.print("Your inscrission state case juric person: ");
                         insState = input.nextLong();
-                    }                    
+                    }
                     if (client instanceof PessoaFisica) {
-                        paymentService.processContract(store.returnOrderForPayment(client.getCodCliente()), months, cpforCnpj);
+                        paymentService.processContract(store.returnOrderForPayment(client.getCodCliente()), months,
+                                cpforCnpj);
                     } else {
-                        paymentService.processContract(store.returnOrderForPayment(client.getCodCliente()), months, cpforCnpj, insState);
+                        paymentService.processContract(store.returnOrderForPayment(client.getCodCliente()), months,
+                                cpforCnpj, insState);
                     }
                     System.out.println();
-                    store.installmentOfClients(client.getCodCliente());                   
+                    store.installmentOfClients(client.getCodCliente());
                     System.out.println("[1] Go to menu");
                     System.out.println("[2] Exit");
                     int option = input.nextInt();
@@ -155,44 +167,54 @@ public class UI {
     }
 
     // codigo para reuso para administrador da loja
-    /*
-     * public static void storeOptions(Store store, Scanner input) {
-     * System.out.println(store.toString());
-     * System.out.println();
-     * System.out.println("#OPTIONS#");
-     * System.out.println("[1] For add new Item");
-     * System.out.println("[2] For remove Item");
-     * int opcao = input.nextInt();
-     * input.nextLine();
-     * itensForAddOrRemove(opcao, store, input);
-     * }
-     * 
-     * public static void itensForAddOrRemove(int opcao, Store store, Scanner input)
-     * {
-     * if(opcao < 1 || opcao >= 3){
-     * throw new StoreException("[ERRO] is invalid the option select");
-     * }else {
-     * switch(opcao) {
-     * case 1:
-     * System.out.println("Select the Item for be added");
-     * System.out.println("________________________________");
-     * System.out.print("[Ball]-[Bike]-[Pen]-[Skate]-[Tv]: ");
-     * String itemType = input.next().toUpperCase();
-     * input.nextLine();
-     * System.out.print("What model of item " + itemType + ":");
-     * String model = input.nextLine();
-     * System.out.print("What price of item " + itemType + ":");
-     * Double price = input.nextDouble();
-     * System.out.print("What code of Item " + itemType + ":");
-     * Integer codProduct = input.nextInt();
-     * input.nextLine();
-     * System.out.print("What quantity of item " + itemType + ":");
-     * Integer quantity = input.nextInt();
-     * store.addItemInStock(ItemTypes.valueOf(itemType), model, price, codProduct,
-     * quantity);
-     * case 2:
-     * }
-     * }
-     * }
-     */
+
+    public static void storeOptions(Store store, Scanner input) {
+        System.out.println(store.toString());
+        System.out.println();
+        System.out.println("#OPTIONS#");
+        System.out.println("[1] For add new Item");
+        System.out.println("[2] For remove Item");
+        int opcao = input.nextInt();
+        input.nextLine();
+        itensForAddOrRemove(opcao, store, input);
+    }
+
+    public static void itensForAddOrRemove(int opcao, Store store, Scanner input) {
+        if (opcao < 1 || opcao >= 3) {
+            throw new StoreException("[ERRO] is invalid the option select");
+        } else {
+            switch (opcao) {
+                case 1:
+                    Character resp;
+                    do {
+                        System.out.println("Select the Item for be added");
+                        System.out.println("________________________________");
+                        System.out.print("[Ball]-[Bike]-[Pen]-[Skate]-[Tv]: ");
+                        String itemType = input.next().toUpperCase();
+                        input.nextLine();
+                        System.out.print("What model of item " + itemType + ":");
+                        String model = input.nextLine();
+                        System.out.print("What price of item " + itemType + ":");
+                        Double price = input.nextDouble();
+                        System.out.print("What code of Item " + itemType + ":");
+                        Integer codProduct = input.nextInt();
+                        input.nextLine();
+                        System.out.print("What quantity of item " + itemType + ":");
+                        Integer quantity = input.nextInt();
+                        
+                        try {
+                            DB.insertProduct(itemType, model, price, quantity, codProduct);
+                        } finally {
+                        }
+                        System.out.println("Se desejar adicionar mais alguma coisa digite[S/N]");
+                        resp = input.next().charAt(0);
+                    } while (resp.equals('s') || resp.equals('S'));
+
+                    initialLogin(store, input);
+
+                case 2:
+            }
+        }
+    }
+
 }
