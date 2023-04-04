@@ -8,14 +8,9 @@ public abstract class Item implements Comparable<Item>{
     private Double price;
     private int quant;
     private Integer cod_Product;
-    private ItemTypes type;
-  
-    public Item(String model, Double price, Integer quant) {  
-     
-       
-            this.setName("pen");
-        
-       
+    
+    public Item(String nome, String model, Double price, Integer quant) {   
+        this.setName(nome);
         this.setModel(model);
         this.setPrice(price);
         this.setQuant(quant);
