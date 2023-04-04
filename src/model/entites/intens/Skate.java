@@ -5,8 +5,8 @@ import model.entites.Item;
 
 public class Skate extends Item {
 
-    public Skate(String model, Double price, Integer quant) {
-        super(model, price, quant);
+    public Skate(String nome, String model, Double price, Integer quant) {
+        super(nome, model, price, quant);
     }
 
     @Override
