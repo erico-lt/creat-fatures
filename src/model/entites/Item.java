@@ -10,21 +10,15 @@ public abstract class Item implements Comparable<Item>{
     private Integer cod_Product;
     private ItemTypes type;
   
-    public Item(String model, Double price, ItemTypes type) {  
-        if(type.equals(ItemTypes.BALL)) {
-            this.setName("Ball");
-        } else if(type.equals(ItemTypes.BIKE)) {
-            this.setName("Bike");
-        } else if(type.equals(ItemTypes.PEN)) {
-            this.setName("Pen");
-        } else if(type.equals(ItemTypes.SKATE)) {
-            this.setName("Skate");
-        } else {
-            this.setName("Tv");
-        }        
+    public Item(String model, Double price, Integer quant) {  
+     
+       
+            this.setName("pen");
+        
+       
         this.setModel(model);
         this.setPrice(price);
-        this.setType(type);
+        this.setQuant(quant);
     }
 
     public String getName() {

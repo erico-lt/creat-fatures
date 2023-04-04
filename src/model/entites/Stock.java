@@ -39,16 +39,7 @@ public class Stock {
         }
         return null;
     }
-
-    public Item verificTypeItem (Item item) {
-        if(item.getType() == ItemTypes.BALL) return new Ball(item.getName(), item.getPrice(), item.getType());
-        if(item.getType() == ItemTypes.BIKE) return new Bike(item.getName(), item.getPrice(), item.getType());
-        if(item.getType() == ItemTypes.PEN) return new Pen(item.getName(), item.getPrice(), item.getType());
-        if(item.getType() == ItemTypes.SKATE) return new Skate(item.getName(), item.getPrice(), item.getType());
-        if(item.getType() == ItemTypes.TV) return new Tv(item.getName(), item.getPrice(), item.getType());
-        return null;
-    }
-
+    
     public String getName() {
         return name;
     }

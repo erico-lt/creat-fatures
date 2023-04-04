@@ -1,12 +1,11 @@
 package model.entites.intens;
 
 import model.entites.Item;
-import model.enums.ItemTypes;
 
 public class Ball extends Item{
 
-    public Ball(String model, Double price, ItemTypes type) {
-        super(model, price, type);       
+    public Ball(String model, Double price, Integer quant) {
+        super(model, price, quant);       
     }
 
     @Override

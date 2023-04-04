@@ -3,10 +3,7 @@ package db;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.*;
-import java.text.SimpleDateFormat;
 import java.util.Properties;
-
-import model.enums.ItemTypes;
 
 public class DB {
     private static Connection conn = null;
@@ -78,7 +75,7 @@ public class DB {
         }
     }
 
-    public static void closeConnection() {
+    public static void closeConnection(Connection conn) {
         if (conn != null) {
             try {
                 conn.close();
