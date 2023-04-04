@@ -28,7 +28,7 @@ public class Aplication {
             st = con.createStatement();            
             rs = st.executeQuery("SELECT * FROM products WHERE cod = 0");
             if (rs.next()) {
-                Item pen = new Pen(rs.getString("marca"), rs.getDouble("preco"), rs.getInt("quant"));
+                Item pen = new Pen(rs.getString("nome"), rs.getString("marca"), rs.getDouble("preco"), rs.getInt("quant"));
                 Integer quantDeb = 50;     
                 String nameItem = pen.getName().toLowerCase(); 
 
