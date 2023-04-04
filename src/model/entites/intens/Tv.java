@@ -4,8 +4,8 @@ import model.entites.Item;
 
 public class Tv extends Item {
 
-    public Tv(String model, Double price, Integer quant) {
-        super(model, price, quant);
+    public Tv(String nome, String model, Double price, Integer quant) {
+        super(nome, model, price, quant);
     }
 
     @Override
