@@ -2,7 +2,8 @@ package model.entites;
 
 import java.util.ArrayList;
 import java.util.List;
-import model.enums.ItemTypes;
+
+import db.DB;
 import model.exception.StoreException;
 import model.interfaces.OlinePaymentService;
 import model.services.StoreServices;
@@ -39,14 +40,10 @@ public class Store {
 
     public Clients getClient(Integer codClient) {
         return this.getClients().stream().filter(cli -> cli.getCodCliente().equals(codClient)).findFirst().orElse(null);
-    }
-
-    public void items() {
-        this.storeServices.addItensInStock(this);
-    }
+    }    
 
     public void itemsForSale() {
-        this.getStock().getList().forEach(System.out::println);
+        DB.viewItems("products");
     }
 
     public void installmentOfClients(Integer cod_Client) {
@@ -59,17 +56,13 @@ public class Store {
         }
     }
 
-    public void addItemInStock(ItemTypes type, String model, Double price, Integer codProduct, Integer quantity) {
-        Item item = this.storeServices.verificItemOfAdd(type, model, price);
+    public void addItemInStock(Integer codProduct, Integer quantity) {
+        Item item = DB.verificItemForSale(codProduct, quantity);
         stock.addItem(item, codProduct, quantity);
     }
 
-    public void checkHaveOrder(String nameItem, int quant, Clients client) {
-        if (!nameItem.equals("BALL") && !nameItem.equals("BIKE") && !nameItem.equals("PEN") && !nameItem.equals("SKATE")
-                && !nameItem.equals("TV")) {
-            throw new StoreException("[ERRO] check name of item");
-        }
-        Item itemForPurchaseOrder = this.getStock().checkItemForSale(nameItem, quant);
+    public void checkHaveOrder(Integer codProduct, Integer quant, Clients client) {        
+        Item itemForPurchaseOrder = DB.verificItemForSale(codProduct, quant);
         if (itemForPurchaseOrder != null) {
             storeServices.checkHaveOrderClient(this, client, itemForPurchaseOrder);
         }

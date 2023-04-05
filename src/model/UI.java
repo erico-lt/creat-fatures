@@ -101,13 +101,13 @@ public class UI {
                     do {
                         store.itemsForSale();
                         System.out.println();
-                        System.out.println("Select the name and quantity");
-                        System.out.print("Name item: ");
-                        String nameItemforSale = input.nextLine().toUpperCase();
+                        System.out.println("Select the Cod Product and quantity");
+                        System.out.print("Cod Product item: ");
+                        Integer codProduct = input.nextInt();
                         System.out.print("quantity:");
                         int quantity = input.nextInt();
 
-                        store.checkHaveOrder(nameItemforSale, quantity, client);
+                        store.checkHaveOrder(codProduct, quantity, client);
 
                         System.out.print("Do you want to place more orders? [S/N] ");
                         resp = input.next().charAt(0);
@@ -200,8 +200,7 @@ public class UI {
                         Integer codProduct = input.nextInt();
                         input.nextLine();
                         System.out.print("What quantity of item " + itemType + ":");
-                        Integer quantity = input.nextInt();
-                        
+                        Integer quantity = input.nextInt();                        
                         try {
                             DB.insertProduct(itemType, model, price, quantity, codProduct);
                         } finally {

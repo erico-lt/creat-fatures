@@ -1,16 +1,14 @@
 package model.entites;
 
-import model.enums.ItemTypes;
-
-public abstract class Item implements Comparable<Item>{
+public  class Item implements Comparable<Item>{
     private String name;
     private String model;
     private Double price;
     private int quant;
     private Integer cod_Product;
     
-    public Item(String nome, String model, Double price, Integer quant) {   
-        this.setName(nome);
+    public Item(String name, String model, Double price, Integer quant) {   
+        this.setName(name);
         this.setModel(model);
         this.setPrice(price);
         this.setQuant(quant);
@@ -39,15 +37,7 @@ public abstract class Item implements Comparable<Item>{
     public void setPrice(double price) {
         this.price = price;
     }
-
-    public ItemTypes getType() {
-        return type;
-    }
-
-    public void setType(ItemTypes type) {
-        this.type = type;
-    }
-
+    
     public int getQuant() {
         return quant;
     }
@@ -71,6 +61,11 @@ public abstract class Item implements Comparable<Item>{
         "\nPrice: " + this.getPrice() + 
         "\nQuantity: " + this.getQuant() + 
         "\n_____________________";       
+    }
+
+    @Override
+    public int compareTo(Item other) {
+       return this.getCod_Product().compareTo(other.cod_Product);
     }
 
 }
