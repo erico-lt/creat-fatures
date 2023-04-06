@@ -1,7 +1,5 @@
 import java.util.Locale;
 import java.util.Scanner;
-
-import db.DB;
 import model.UI;
 import model.entites.Clients;
 import model.entites.Store;
@@ -9,9 +7,8 @@ import model.entites.client.PessoaJuridica;
 import model.services.PaypalService;
 
 public class Aplication {
-    public static void main(String[] args){            
+    public static void main(String[] args){           
         
-        DB.creatTableProducts();
         Locale.setDefault(Locale.US);
         Scanner input = new Scanner(System.in); 
         PaypalService paypalService = new PaypalService();       

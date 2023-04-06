@@ -190,19 +190,19 @@ public class UI {
                         System.out.println("Select the Item for be added");
                         System.out.println("________________________________");
                         System.out.print("[Ball]-[Bike]-[Pen]-[Skate]-[Tv]: ");
-                        String itemType = input.next().toUpperCase();
+                        String NameItem = input.next().toUpperCase();
                         input.nextLine();
-                        System.out.print("What model of item " + itemType + ":");
+                        System.out.print("What model of item " + NameItem + ":");
                         String model = input.nextLine();
-                        System.out.print("What price of item " + itemType + ":");
+                        System.out.print("What price of item " + NameItem + ":");
                         Double price = input.nextDouble();
-                        System.out.print("What code of Item " + itemType + ":");
+                        System.out.print("What code of Item " + NameItem + ":");
                         Integer codProduct = input.nextInt();
                         input.nextLine();
-                        System.out.print("What quantity of item " + itemType + ":");
-                        Integer quantity = input.nextInt();                        
+                        System.out.print("What quantity of item " + NameItem + ":");
+                        Integer quantity = input.nextInt();
                         try {
-                            DB.insertProduct(itemType, model, price, quantity, codProduct);
+                            DB.insertProduct(NameItem, model, price, quantity, codProduct);
                         } finally {
                         }
                         System.out.println("Se desejar adicionar mais alguma coisa digite[S/N]");
@@ -210,8 +210,20 @@ public class UI {
                     } while (resp.equals('s') || resp.equals('S'));
 
                     initialLogin(store, input);
+                case 2:                    
+                    do {
+                        System.out.print("Name table item: ");
+                        String table = input.next();
+                        System.out.print("Cod product or client: ");
+                        Integer cod = input.nextInt();
+                        DB.removeItem(table, cod);
+                        System.out.println("Se desejar adicionar mais alguma coisa digite[S/N]");
+                        resp = input.next().charAt(0);
+                    } while (resp.equals('s') || resp.equals('S'));
 
-                case 2:
+                    initialLogin(store, input);
+                default:
+                    break;
             }
         }
     }
