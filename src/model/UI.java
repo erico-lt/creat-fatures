@@ -55,21 +55,17 @@ public class UI {
             System.out.print("Email: ");
             String email = input.nextLine();
             System.out.print("Address -> (street,district,city,state): ");
-            String[] address = input.nextLine().split(",");
+            String address = input.nextLine();
             System.out.print("Cod client: ");
             Integer cod_Client = input.nextInt();
             if (optionPerson == 1) {
                 System.out.print("CPF: ");
-                Long cpf = input.nextLong();
-                System.out.print("RG: ");
-                Long rg = input.nextLong();
-                store.addClients(new PessoaFisica(name, telephone, email, address, cpf, rg, cod_Client));
+                Long cpf = input.nextLong();                
+                store.addClients(new PessoaFisica(name, telephone, email, address, cpf, cod_Client));
             } else {
                 System.out.print("CNPJ: ");
-                Long cnpj = input.nextLong();
-                System.out.print("State Inscription: ");
-                Long stateInsc = input.nextLong();
-                store.addClients(new PessoaJuridica(name, telephone, email, address, cnpj, stateInsc, cod_Client));
+                Long cnpj = input.nextLong();               
+                store.addClients(new PessoaJuridica(name, telephone, email, address, cnpj, cod_Client));
             }
             initialLogin(store, input);
         }

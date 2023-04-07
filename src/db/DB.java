@@ -34,16 +34,38 @@ public class DB {
             throw new DbException(erro.getMessage());
         }
     }
+    
+    public static boolean verificIfClientExist(Integer cod_Client) {
+        Statement st = null;
+        ResultSet rs = null;
+        Integer test = -1;
+        String sql = "select * from clients WHERE cod = " + cod_Client;
+
+        try {
+            st = getConnection().createStatement();
+            rs = st.executeQuery(sql);
+            while (rs.next()) {
+                test = rs.getInt("cod");                
+            }
+           return test.equals(cod_Client);          
+        } catch (SQLException e) {
+            throw new DbException("[ERRO] by: " + e.getMessage());
+        } finally {
+            closeResult(rs);
+            closeStatment(st);
+        }
+
+    }
 
     // Crianção da tabela de productos
     public static void creatTableProducts() {
         String sql = "CREATE TABLE products("
-                + "id INT(4) NOT NULL AUTO_INCREMENT PRIMARY KEY,"
-                + "name VARCHAR(20) NOT NULL,"
-                + "model VARCHAR(220) NOT NULL,"
-                + "price DECIMAL(10,2) NOT NULL,"
-                + "quant INT(5) NOT NULL,"
-                + "cod INT(5) NOT NULL);";
+            + " id INT(4) NOT NULL AUTO_INCREMENT PRIMARY KEY,"
+            + " name VARCHAR(20) NOT NULL,"
+            + " model VARCHAR(220) NOT NULL,"
+            + " price DECIMAL(10,2) NOT NULL,"
+            + " quant INT(5) NOT NULL,"
+            + " cod INT(5) NOT NULL);";
         try {
             Statement stm = getConnection().createStatement();
             stm.executeUpdate(sql);
@@ -53,6 +75,28 @@ public class DB {
             throw new DbException(e.getMessage());
         }
 
+    }
+
+    public static void createTableCLients() {
+        Statement st = null;        
+        String sql = "CREATE TABLE clients("
+        + " id INT(4) NOT NULL AUTO_INCREMENT PRIMARY KEY,"
+        + " name VARCHAR(60) NOT NULL,"
+        + " email VARCHAR(30) NOT NULL,"        
+        + " telephone VARCHAR(12) NOT NULL," 
+        + " address VARCHAR(35) NOT NULL," 
+        + " cpf_cnpj VARCHAR(12) NOT NULL," 
+        + " type_client VARCHAR(8) NOT NULL,"
+        + " cod INT(4) NOT NULL);";
+
+        try {
+            st = getConnection().createStatement();
+            st.executeUpdate(sql);
+            System.out.println("Table creat with success");
+            closeStatment(st);
+        } catch (SQLException e) {
+            throw new DbException("[ERRO] failure by: " + e.getMessage());
+        }
     }
 
     // Merodo para adicionar itens na table de productos
@@ -75,7 +119,7 @@ public class DB {
             throw new DbException(e.getMessage());
         }
 
-    }
+    }  
 
     public static void removeItem(String table, Integer cod_ProOrItem) {
         PreparedStatement ps = null;

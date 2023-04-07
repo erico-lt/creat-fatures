@@ -3,17 +3,15 @@ package model.entites.client;
 import model.entites.Clients;
 
 public class PessoaFisica extends Clients{
-    private Long cpf;
-    private Long rg; 
+    private Long cpf;    
 
     public PessoaFisica(Integer cod, String name) {
         super(cod, name); 
     }
 
-    public PessoaFisica(String name, String telephone, String email, String[] address, Long cpf, Long rg, Integer codCliente) {
+    public PessoaFisica(String name, String telephone, String email, String address, Long cpf, Integer codCliente) {
         super(name, telephone, email, address, codCliente);     
-        this.setCpf(cpf);
-        this.setRg(rg);   
+        this.setCpf(cpf);        
     }
 
     public Long getCpf() {
@@ -22,14 +20,6 @@ public class PessoaFisica extends Clients{
 
     public void setCpf(Long cpf) {
         this.cpf = cpf;
-    }
-
-    public Long getRg() {
-        return rg;
-    }
-
-    public void setRg(Long rg) {
-        this.rg = rg;
     }
 
     @Override

@@ -4,7 +4,7 @@ public abstract class Clients  implements Comparable<Clients>{
     private String name;
     private String telephone;
     private String email;
-    private String[] address = new String[4];
+    private String address;
     private Integer codCliente;    
 
     public Clients(Integer cod, String name) {
@@ -12,7 +12,7 @@ public abstract class Clients  implements Comparable<Clients>{
         this.setName(name);
     }  
 
-    public Clients(String name, String telephone, String email, String[] address, Integer codClient) {
+    public Clients(String name, String telephone, String email, String address, Integer codClient) {
         this.setName(name);
         this.setTelephone(telephone);
         this.setEmail(email);
@@ -44,17 +44,12 @@ public abstract class Clients  implements Comparable<Clients>{
         this.email = email;
     }
 
-    public String[] getAddress() {
+    public String getAddress() {
         return address;
     }
 
-    public void setAddress(String[] address) {
-        if(address.length < 4) {
-            throw new NullPointerException("[ERRO] endereço incompleto");
-        }
-        for(int cont = 0; cont < this.getAddress().length - 1; cont++) {
-            this.address[cont] = address[cont];
-        }
+    public void setAddress(String address) {
+      this.address = address;
     }
 
     public void setCodCliente(Integer codClient) {

@@ -22,7 +22,7 @@ public class Store {
         this.setOlinePaymentService(olinePaymentService);
     }
 
-    public void addClients(Clients client) {
+    public void addClients(Clients client) {        
         if (this.clientExist(client.getCodCliente())) {
             throw new StoreException("Erro cliente já esxiste tente outro");
         } else {
@@ -31,11 +31,13 @@ public class Store {
     }
 
     public boolean clientExist(Integer cod_Client) {
-        if (this.getClients().stream().anyMatch(cli -> cli.getCodCliente().equals(cod_Client))) {
+        
+        return DB.verificIfClientExist(cod_Client);
+        /* if (this.getClients().stream().anyMatch(cli -> cli.getCodCliente().equals(cod_Client))) {
             return true;
         } else {
             return false;
-        }
+        } */
     }
 
     public Clients getClient(Integer codClient) {
