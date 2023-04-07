@@ -141,9 +141,9 @@ public class DB {
                     ps.setInt(2, item.getCod_Product());
                     int rows = ps.executeUpdate();
                     System.out.println("Success!!, Rows: " + rows);
+                    con.commit();
                 }
-            }
-            con.commit();
+            }            
 
         } catch (SQLException e) {
             try {
