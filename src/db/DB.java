@@ -83,10 +83,10 @@ public class DB {
         + " id INT(4) NOT NULL AUTO_INCREMENT PRIMARY KEY,"
         + " name VARCHAR(60) NOT NULL,"
         + " email VARCHAR(30) NOT NULL,"        
-        + " telephone VARCHAR(12) NOT NULL," 
+        + " telephone VARCHAR(15) NOT NULL," 
         + " address VARCHAR(35) NOT NULL," 
-        + " cpf_cnpj VARCHAR(12) NOT NULL," 
-        + " type_client VARCHAR(8) NOT NULL,"
+        + " cpf_cnpj VARCHAR(15) NOT NULL," 
+        + " type_client VARCHAR(13) NOT NULL,"
         + " cod INT(4) NOT NULL);";
 
         try {
@@ -99,12 +99,11 @@ public class DB {
         }
     }
 
-    // Merodo para adicionar itens na table de productos
     public static void insertProduct(String name, String marca, Double preco, Integer quant, Integer cod) {
         try {
-            PreparedStatement ps = getConnection().prepareStatement("INSERT INTO products" +
-                    "(name, model, price, quant, cod)"
-                    + "VALUE (?,?,?,?,?)");
+            PreparedStatement ps = getConnection().prepareStatement("INSERT INTO products" 
+                                                                   + "(name, model, price, quant, cod)"
+                                                                   + "VALUE (?,?,?,?,?)");
 
             ps.setString(1, name);
             ps.setString(2, marca);
@@ -120,6 +119,32 @@ public class DB {
         }
 
     }  
+
+    public static void insertClient(String name, String email, long telephone, String address, String cpf_cnpj, String typeClient, Integer cod_Client) {
+        PreparedStatement ps = null;
+        Connection con = null;
+        String sql = "INSERT INTO clients("
+        +" name, email, telephone, address, cpf_cnpj, type_client, cod)"
+        + "VALUE (?,?,?,?,?,?,?)";
+        try {
+            con = getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, name);
+            ps.setString(2, email);
+            ps.setString(3, Long.toString(telephone));
+            ps.setString(4, address);
+            ps.setString(5, cpf_cnpj);
+            ps.setString(6, typeClient);
+            ps.setInt(7, cod_Client);
+           int rows = ps.executeUpdate();
+           System.out.println("Success! rows affected: " + rows);
+        } catch (SQLException e) {
+            throw new DbException("[ERRO] failure inrest by: " + e.getMessage());
+        } finally {
+            closeConnection(con);
+            closeStatment(ps);
+        }
+    }
 
     public static void removeItem(String table, Integer cod_ProOrItem) {
         PreparedStatement ps = null;
@@ -142,7 +167,7 @@ public class DB {
             }
         }
 
-    }
+    }    
 
     public static void viewItems(String tableName) {
         try {

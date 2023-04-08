@@ -8,7 +8,8 @@ import model.entites.client.PessoaJuridica;
 import model.services.PaypalService;
 
 public class Aplication {
-    public static void main(String[] args){                 
+    public static void main(String[] args){         
+               
         Locale.setDefault(Locale.US);
         Scanner input = new Scanner(System.in); 
         PaypalService paypalService = new PaypalService();       

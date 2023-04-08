@@ -6,7 +6,7 @@ import db.DB;
 import model.entites.Clients;
 import model.entites.Store;
 import model.entites.client.PessoaFisica;
-import model.entites.client.PessoaJuridica;
+
 import model.exception.StoreException;
 import model.services.MethodOfPayment;
 
@@ -51,21 +51,24 @@ public class UI {
             System.out.print("Type your name: ");
             String name = input.nextLine();
             System.out.print("Telephone: ");
-            String telephone = input.nextLine();
-            System.out.print("Email: ");
+            long telephone = input.nextLong();
+            input.nextLine();
+            System.out.print("Email: ");            
             String email = input.nextLine();
-            System.out.print("Address -> (street,district,city,state): ");
+            System.out.print("Address -> (street,city,state): ");
             String address = input.nextLine();
             System.out.print("Cod client: ");
             Integer cod_Client = input.nextInt();
             if (optionPerson == 1) {
+                String type = "Fisic person";
                 System.out.print("CPF: ");
-                Long cpf = input.nextLong();                
-                store.addClients(new PessoaFisica(name, telephone, email, address, cpf, cod_Client));
+                String cpf = input.next();                
+                DB.insertClient(name, email, telephone, address, cpf, type, cod_Client);
             } else {
+                String type = "Fisic person";
                 System.out.print("CNPJ: ");
-                Long cnpj = input.nextLong();               
-                store.addClients(new PessoaJuridica(name, telephone, email, address, cnpj, cod_Client));
+                String cnpj = input.next();              
+                DB.insertClient(name, email, telephone, address, cnpj, type, cod_Client);
             }
             initialLogin(store, input);
         }
