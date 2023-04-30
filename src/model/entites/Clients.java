@@ -70,11 +70,6 @@ public class Clients  implements Comparable<Clients>{
         this.cpf_cnpj = cpf_cnpj;
     }
 
-    @Override 
-    public String toString() {
-        return this.getName() + "," + this.getCodCliente();
-    }
-
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -109,9 +104,12 @@ public class Clients  implements Comparable<Clients>{
     @Override
     public int compareTo(Clients other) {
         return this.getCodCliente().compareTo(other.getCodCliente());         
-    }    
+    }
 
-
-  
+    @Override
+    public String toString() {
+        return "Clients [name=" + name + ", telephone=" + telephone + ", email=" + email + ", address=" + address
+                + ", codCliente=" + codCliente + ", cpf_cnpj=" + cpf_cnpj + "]";
+    }         
 
 }
