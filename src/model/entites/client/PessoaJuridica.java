@@ -5,9 +5,8 @@ import model.entites.Clients;
 public class PessoaJuridica extends Clients{
     private Long cnpj;
     
-    public PessoaJuridica(String name, String telephone, String email, String address, Long cnpj, Integer codCliente) {
-        super(name, telephone, email, address, codCliente);
-        this.setCnpj(cnpj);              
+    public PessoaJuridica(String name, long telephone, String email, String address, Long cnpj, Integer codCliente) {
+        super(name, telephone, email, address, codCliente, cnpj);                 
     }
 
     public PessoaJuridica (Integer cod, String name) {

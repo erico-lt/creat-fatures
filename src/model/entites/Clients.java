@@ -1,23 +1,25 @@
 package model.entites;
 
-public abstract class Clients  implements Comparable<Clients>{
+public class Clients  implements Comparable<Clients>{
     private String name;
-    private String telephone;
+    private long telephone;
     private String email;
     private String address;
     private Integer codCliente;    
+    private long cpf_cnpj;
 
     public Clients(Integer cod, String name) {
         this.setCodCliente(cod);
         this.setName(name);
     }  
 
-    public Clients(String name, String telephone, String email, String address, Integer codClient) {
+    public Clients(String name, long telephone, String email, String address, Integer codClient, long cpf_cnpj) {
         this.setName(name);
         this.setTelephone(telephone);
         this.setEmail(email);
         this.setAddress(address);
         this.setCodCliente(codClient);
+        this.setCpf_cnpj(cpf_cnpj);
     }
 
     public String getName() {
@@ -28,11 +30,11 @@ public abstract class Clients  implements Comparable<Clients>{
         this.name = name;
     }
 
-    public String getTelephone() {
+    public long getTelephone() {
         return telephone;
     }
 
-    public void setTelephone(String telephone) {
+    public void setTelephone(long telephone) {
         this.telephone = telephone;
     }
 
@@ -58,6 +60,14 @@ public abstract class Clients  implements Comparable<Clients>{
 
     public Integer getCodCliente() {
         return codCliente;
+    }
+
+    public long getCpf_cnpj() {
+        return cpf_cnpj;
+    }
+
+    public void setCpf_cnpj(long cpf_cnpj) {
+        this.cpf_cnpj = cpf_cnpj;
     }
 
     @Override 
@@ -94,6 +104,14 @@ public abstract class Clients  implements Comparable<Clients>{
         } else if (!codCliente.equals(other.codCliente))
             return false;
         return true;
+    }
+
+    @Override
+    public int compareTo(Clients other) {
+        return this.getCodCliente().compareTo(other.getCodCliente());         
     }    
+
+
+  
 
 }

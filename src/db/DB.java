@@ -83,10 +83,9 @@ public class DB {
         + " id INT(4) NOT NULL AUTO_INCREMENT PRIMARY KEY,"
         + " name VARCHAR(60) NOT NULL,"
         + " email VARCHAR(30) NOT NULL,"        
-        + " telephone VARCHAR(15) NOT NULL," 
+        + " telephone BIGINT(11) NOT NULL," 
         + " address VARCHAR(35) NOT NULL," 
-        + " cpf_cnpj VARCHAR(15) NOT NULL," 
-        + " type_client VARCHAR(13) NOT NULL,"
+        + " cpf_cnpj VARCHAR(15) NOT NULL,"         
         + " cod INT(4) NOT NULL);";
 
         try {

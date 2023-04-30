@@ -9,9 +9,9 @@ public class PessoaFisica extends Clients{
         super(cod, name); 
     }
 
-    public PessoaFisica(String name, String telephone, String email, String address, Long cpf, Integer codCliente) {
-        super(name, telephone, email, address, codCliente);     
-        this.setCpf(cpf);        
+    public PessoaFisica(String name, long telephone, String email, String address, Long cpf, Integer codCliente) {
+        super(name, telephone, email, address, codCliente, cpf);    
+           
     }
 
     public Long getCpf() {

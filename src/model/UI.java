@@ -3,6 +3,8 @@ package model;
 import java.util.Scanner;
 
 import db.DB;
+import model.dao.ClientDAO;
+import model.dao.FactoryDAO;
 import model.entites.Clients;
 import model.entites.Store;
 import model.entites.client.PessoaFisica;
@@ -13,6 +15,7 @@ import model.services.MethodOfPayment;
 public class UI {
 
     private static final Integer adm = 0;
+    private static ClientDAO clientDao = FactoryDAO.createClientJBDC(); 
 
     public static void clearScreen() {
         System.out.print("\033[H\033[2J");
@@ -43,10 +46,7 @@ public class UI {
             firstPage(store, input, client);
         } else {
             clearScreen();
-            System.out.println(store.toString());
-            System.out.println("[1] for person fisic");
-            System.out.println("[2] for person juridic");
-            int optionPerson = input.nextInt();
+            System.out.println(store.toString());    
             input.nextLine();
             System.out.print("Type your name: ");
             String name = input.nextLine();
@@ -59,17 +59,10 @@ public class UI {
             String address = input.nextLine();
             System.out.print("Cod client: ");
             Integer cod_Client = input.nextInt();
-            if (optionPerson == 1) {
-                String type = "Fisic person";
-                System.out.print("CPF: ");
-                String cpf = input.next();                
-                DB.insertClient(name, email, telephone, address, cpf, type, cod_Client);
-            } else {
-                String type = "Fisic person";
-                System.out.print("CNPJ: ");
-                String cnpj = input.next();              
-                DB.insertClient(name, email, telephone, address, cnpj, type, cod_Client);
-            }
+            System.out.print("CPF OR CNPJ: ");
+            long cpf_cnpj = input.nextLong();
+
+            clientDao.insertClient(new Clients(name, telephone, email, address, cod_Client, cpf_cnpj));
             initialLogin(store, input);
         }
     }
