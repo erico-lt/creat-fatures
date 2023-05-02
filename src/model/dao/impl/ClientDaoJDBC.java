@@ -4,13 +4,16 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import db.DB;
 import db.DbException;
 import model.dao.ClientDAO;
 import model.entites.Clients;
 
-public class ClientDaoJDBC implements ClientDAO{
+public class ClientDaoJDBC implements ClientDAO {
 
     private Connection conn;
 
@@ -21,24 +24,38 @@ public class ClientDaoJDBC implements ClientDAO{
     @Override
     public void insertClient(Clients client) {
         PreparedStatement ps = null;
+        ResultSet rs = null;
         String dml = "INSERT INTO clients("
-        + "name, email, telephone, address, cpf_cnpj, cod)"
-        + " VALUES (?,?,?,?,?,?);";       
+                + "name, email, telephone, address, cpf_cnpj, cod)"
+                + " VALUES (?,?,?,?,?,?)";
 
         try {
-            ps = conn.prepareStatement(dml);
+            ps = conn.prepareStatement(dml, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, client.getName());
             ps.setString(2, client.getEmail());
-            ps.setLong(3, client.getTelephone()); 
+            ps.setLong(3, client.getTelephone());
             ps.setString(4, client.getAddress());
             ps.setLong(5, client.getCpf_cnpj());
-            ps.setInt(6, client.getCodCliente());  
-            int rowsAfected = ps.executeUpdate();        
-            System.out.printf("Success!!, rows affected %d \n", rowsAfected);  
+            ps.setInt(6, client.getCodCliente());
+
+            int rowsAfected = ps.executeUpdate();
+            if (rowsAfected > 0) {
+                rs = ps.getGeneratedKeys();
+                if (rs.next()) {
+                    int id = rs.getInt(1);
+                    System.out.printf("Success!!, rows affected %d \n", rowsAfected);
+                    System.out.printf("Cod item added %d \n", id);
+                }
+
+            } else {
+                throw new DbException("Faiulred item not added");
+            }
+
         } catch (SQLException e) {
             throw new DbException("[ERRO] By: " + e.getMessage());
         } finally {
             DB.closeStatment(ps);
+            DB.closeResult(rs);
         }
     }
 
@@ -53,9 +70,9 @@ public class ClientDaoJDBC implements ClientDAO{
             ps = conn.prepareStatement(dql);
             ps.setInt(1, cod);
             rs = ps.executeQuery();
-            if(rs.next()) {
+            if (rs.next()) {
                 client = instantClients(rs);
-            }        
+            }
 
             return client;
         } catch (SQLException e) {
@@ -67,9 +84,24 @@ public class ClientDaoJDBC implements ClientDAO{
     }
 
     @Override
-    public void findByAll() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findByAll'");
+    public List<Clients> findByAll() {
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        List<Clients> listCli = new ArrayList<>();
+        String sql = "SELECT * FROM clients";
+        try {
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Clients client = instantClients(rs);
+                listCli.add(client);
+            }
+            
+            return listCli;
+        } catch (SQLException e) {
+            throw new DbException("[ERRO] by:" + e.getMessage());
+        }
+
     }
 
     public Clients instantClients(ResultSet rs) throws SQLException {
@@ -81,5 +113,5 @@ public class ClientDaoJDBC implements ClientDAO{
         Integer cod = rs.getInt("cod");
         return new Clients(name, telephone, email, address, cod, cpf_cnpj);
     }
-    
+
 }

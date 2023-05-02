@@ -1,10 +1,12 @@
 package model.dao;
 
+import java.util.List;
+
 import model.entites.Clients;
 
 public interface ClientDAO {
     
     abstract void insertClient(Clients client);
     abstract Clients getClientfindByCod(Integer cod);
-    abstract void findByAll();
+    abstract List<Clients> findByAll();
 }
