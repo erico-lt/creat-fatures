@@ -9,17 +9,15 @@ import java.util.List;
 public class PurchaseOrder {
     private LocalDate date;
     private double valueOrder;
-    private Integer requestNumber;
-    private Integer cod_Client;
+    private Integer requestNumber;    
 
     private List<Item> requestList = new ArrayList<>();
     private List<Installment> listInstallment = new ArrayList<>();
     //private ServicesPurchaseOrder servicesPurchaseOrder = new ServicesPurchaseOrder();
 
-    public PurchaseOrder(LocalDate date, Integer requestNumber, Integer cod_Client) {
+    public PurchaseOrder(LocalDate date, Integer requestNumber) {
         this.setDate(date);
-        this.setRequestNumber(requestNumber);
-        this.setCod_Client(cod_Client);
+        this.setRequestNumber(requestNumber);        
         this.setValueOrder(0);
     }
 
@@ -59,14 +57,6 @@ public class PurchaseOrder {
 
     public void setRequestNumber(Integer requestNumber) {
         this.requestNumber = requestNumber;
-    }
-
-    public Integer getCod_Client() {
-        return cod_Client;
-    }
-
-    public void setCod_Client(Integer cod_Client) {
-        this.cod_Client = cod_Client;
     }
 
     public List<Item> getRequestList() {
