@@ -9,24 +9,23 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.create_fatures.entites.Clients;
-import com.create_fatures.services.ClientsServices;
+import com.create_fatures.entites.Item;
+import com.create_fatures.services.ItemServices;
 
 @RestController
-@RequestMapping(value = "/clients")
-public class ClientsResources {
-    
+@RequestMapping(value = "/itens")
+public class ItemResources {
+
     @Autowired
-    private ClientsServices clientsServices;
+    private ItemServices itemServices;
 
     @GetMapping
-    public ResponseEntity<List<Clients>> findAll() {
-
-        return ResponseEntity.ok().body(clientsServices.findAll());
+    public ResponseEntity<List<Item>> findAll() {
+        return ResponseEntity.ok().body(itemServices.findAll());
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<Clients> findById(@PathVariable Long id) {
-        return ResponseEntity.ok().body(clientsServices.findById(id));
+    public ResponseEntity<Item> findById(@PathVariable Long id) {
+        return ResponseEntity.ok().body(itemServices.findById(id));
     }
 }
