@@ -19,7 +19,7 @@ public class PurchaseOrder {
     private Integer id;
     private LocalDate date;    
 
-    @OneToMany
+    @OneToMany(mappedBy = "purchaseOrder")
     private Set<PurchaseItem> itemList = new HashSet<>();
     
     @JsonIgnore

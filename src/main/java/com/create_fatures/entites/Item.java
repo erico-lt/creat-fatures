@@ -22,7 +22,7 @@ public class Item implements Serializable {
     private String name;   
     private Double price;  
 
-    @OneToMany
+    @OneToMany(mappedBy = "item")
     private Set<PurchaseItem> purchaseItem = new HashSet<>();   
 
     public Item() {        
