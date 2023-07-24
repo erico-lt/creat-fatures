@@ -2,38 +2,35 @@ package com.create_fatures.entites;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
-//import model.services.ServicesPurchaseOrder;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+
+@Entity
+@Table
 public class PurchaseOrder {
-    private LocalDate date;
-    private double valueOrder;
-    private Integer requestNumber;    
 
-    private List<Item> requestList = new ArrayList<>();
+    private Integer id;
+    private LocalDate date;    
+
+    @OneToMany
+    private Set<PurchaseItem> itemList = new HashSet<>();
+    
+    @JsonIgnore
     private List<Installment> listInstallment = new ArrayList<>();
-    //private ServicesPurchaseOrder servicesPurchaseOrder = new ServicesPurchaseOrder();
+    // private ServicesPurchaseOrder servicesPurchaseOrder = new
+    // ServicesPurchaseOrder();
 
-    public PurchaseOrder(LocalDate date, Integer requestNumber) {
+    public PurchaseOrder(LocalDate date, Integer id) {
         this.setDate(date);
-        this.setRequestNumber(requestNumber);        
-        this.setValueOrder(0);
-    }
-
-    /* 
-    public void addItemForSale(Item item) {
-        if (!servicesPurchaseOrder.codPorductExist(this.getRequestList(), item)) {
-            this.getRequestList().add(item);
-        } else{
-            for(Item ite: this.getRequestList()) {
-                if(ite.getName().toUpperCase().equals(item.getName().toUpperCase())) {
-                    ite.setQuant(ite.getQuant() + item.getQuant());
-                }
-            }
-        }
-        this.setValueOrder(this.getValueOrder() + servicesPurchaseOrder.valueOrder(item));
-    }*/
+        this.setId(id);       
+    }    
 
     public LocalDate getDate() {
         return date;
@@ -43,24 +40,16 @@ public class PurchaseOrder {
         this.date = date;
     }
 
-    public double getValueOrder() {
-        return valueOrder;
+    public Integer getId() {
+        return id;
     }
 
-    private void setValueOrder(double valueOrder) {
-        this.valueOrder = valueOrder;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public Integer getRequestNumber() {
-        return requestNumber;
-    }
-
-    public void setRequestNumber(Integer requestNumber) {
-        this.requestNumber = requestNumber;
-    }
-
-    public List<Item> getRequestList() {
-        return requestList;
+    public Set<PurchaseItem> getitemList() {
+        return itemList;
     }
 
     public List<Installment> getListInstallment() {
@@ -69,6 +58,15 @@ public class PurchaseOrder {
 
     public void addInstallment(Installment Installment) {
         this.listInstallment.add(Installment);
+    }
+
+    public Double getTotalValue() {
+        double valueOrder = 0;
+        for(PurchaseItem item: getitemList()) {
+            valueOrder = item.getSubTotal();
+        }
+
+        return valueOrder;
     }
 
 }

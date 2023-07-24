@@ -1,11 +1,14 @@
 package com.create_fatures.entites;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -18,6 +21,9 @@ public class Item implements Serializable {
     private Long id;
     private String name;   
     private Double price;  
+
+    @OneToMany
+    private Set<PurchaseItem> purchaseItem = new HashSet<>();   
 
     public Item() {        
     }
@@ -51,6 +57,10 @@ public class Item implements Serializable {
     public void setPrice(Double price) {
         this.price = price;
     }
+
+    public Set<PurchaseItem> getPurchaseItem() {
+        return purchaseItem;
+    } 
 
     @Override
     public int hashCode() {
