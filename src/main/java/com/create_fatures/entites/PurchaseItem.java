@@ -2,45 +2,32 @@ package com.create_fatures.entites;
 
 import java.io.Serializable;
 
+import com.create_fatures.pk.PurchaseItemPK;
+
+import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "tb_purchaseItem")
+@Table(name = "tb_purchase_item")
 public class PurchaseItem implements Serializable{
     private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @EmbeddedId
+    private PurchaseItemPK id = new PurchaseItemPK();
 
     private Integer quantity;
 
-    private Double price;    
+    private Double price;       
+    
+    public PurchaseItem(){        
+    }
 
-    @ManyToOne
-    private PurchaseOrder purchaseOrder;
-
-    @ManyToOne
-    private Item item;
-
-    public PurchaseItem(PurchaseItem purchaseItem, Item item, Integer quantity, Double price) {
+    public PurchaseItem(Order purchaseOrder, Item item, Integer quantity, Double price) {
         this.setPurchaseOrder(purchaseOrder);
         this.setItem(item);
         this.setQuantity(quantity);
         this.setPrice(price);
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public Integer getQuantity() {
@@ -51,20 +38,20 @@ public class PurchaseItem implements Serializable{
         this.quantity = quantity;
     }
 
-    public PurchaseOrder getPurchaseOrder() {
-        return purchaseOrder;
+    public Order getPurchaseOrder() {
+        return this.id.getPurchaseOrder();
     }
 
-    public void setPurchaseOrder(PurchaseOrder purchaseOrder) {
-        this.purchaseOrder = purchaseOrder;
+    public void setPurchaseOrder(Order purchaseOrder) {
+        this.id.setPurchaseOrder(purchaseOrder);
     }
 
     public Item getItem() {
-        return item;
+        return this.id.getItem();
     }
 
     public void setItem(Item item) {
-        this.item = item;
+        this.id.setItem(item);
     }
 
     public Double getPrice() {

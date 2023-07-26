@@ -7,15 +7,11 @@ public class Installment {
     private LocalDate dueDate;
     private double amount;
     private Long cnpj;
-    private Long cpf;
-    private Long insState;
+    private Long cpf;    
     DateTimeFormatter stf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     
-    public Installment(LocalDate dueDate, double amount, Long cnpj, Long insState) {
-        this.setDueDate(dueDate);
-        this.setAmount(amount);
-        this.setCnpj(cnpj);
-        this.setInsState(insState);
+    public Installment() {
+        
     }
     
     public Installment(LocalDate dueDate, double amount, Long cpf) {
@@ -55,20 +51,5 @@ public class Installment {
     public void setCpf(Long cpf) {
         this.cpf = cpf;
     }
-
-    public Long getInsState() {
-        return insState;
-    }
-
-    public void setInsState(Long insState) {
-        this.insState = insState;
-    }
-
-    @Override
-    public String toString(){
-        return  this.getDueDate().format(stf) + " - " + String.format("%.2f",this.getAmount());
-    }  
-
-    
 
 }
