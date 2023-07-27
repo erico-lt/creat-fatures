@@ -20,15 +20,15 @@ public class PurchaseItemPK implements Serializable{
     @ManyToOne
     @JoinColumn(name = "item_id")
     private Item item;
-
-    public Order getPurchaseOrder() {
+ 
+    public Order getOrder() {
         return purchaseOrder;
     }
 
-    public void setPurchaseOrder(Order newPurchaseOrder) {
+    public void setOrder(Order newPurchaseOrder) {
         this.purchaseOrder = newPurchaseOrder;
     }
-
+    
     public Item getItem() {
         return item;
     }

@@ -17,6 +17,11 @@ public class OrderServices {
 
     public List<Order> findAll() {
         
+        try {
+            return orderRepository.findAll();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return orderRepository.findAll();
     }
 

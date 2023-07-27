@@ -3,6 +3,7 @@ package com.create_fatures.entites;
 import java.io.Serializable;
 
 import com.create_fatures.pk.PurchaseItemPK;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
@@ -13,6 +14,7 @@ import jakarta.persistence.Table;
 public class PurchaseItem implements Serializable{
     private static final long serialVersionUID = 1L;
 
+    
     @EmbeddedId
     private PurchaseItemPK id = new PurchaseItemPK();
 
@@ -24,7 +26,7 @@ public class PurchaseItem implements Serializable{
     }
 
     public PurchaseItem(Order purchaseOrder, Item item, Integer quantity, Double price) {
-        this.setPurchaseOrder(purchaseOrder);
+        this.setOrder(purchaseOrder);
         this.setItem(item);
         this.setQuantity(quantity);
         this.setPrice(price);
@@ -37,13 +39,14 @@ public class PurchaseItem implements Serializable{
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
-
-    public Order getPurchaseOrder() {
-        return this.id.getPurchaseOrder();
+    
+    @JsonIgnore
+    public Order getOrder() {
+        return this.id.getOrder();
     }
 
-    public void setPurchaseOrder(Order purchaseOrder) {
-        this.id.setPurchaseOrder(purchaseOrder);
+    public void setOrder(Order purchaseOrder) {
+        this.id.setOrder(purchaseOrder);
     }
 
     public Item getItem() {

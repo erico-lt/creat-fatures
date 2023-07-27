@@ -12,10 +12,10 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-//import jakarta.persistence.Transient;
+import jakarta.persistence.Transient;
 
 @Entity
-@Table(name = "tb_purchaseOrder")
+@Table(name = "tb_order")
 public class Order {
 
     @Id
@@ -25,11 +25,12 @@ public class Order {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-HH", timezone = "GMT")
     private Instant date;
 
+    @Transient
     @OneToMany(mappedBy = "id.purchaseOrder")
     private Set<PurchaseItem> itemList = new HashSet<>();
-
-    // @Transient
-    // private Set<Installment> listInstallment = new HashSet<>();
+    
+    @Transient
+    private Set<Installment> listInstallment = new HashSet<>();
 
     public Order() {
     }
@@ -54,17 +55,16 @@ public class Order {
     public void setId(Long id) {
         this.id = id;
     }
-
-    public Set<PurchaseItem> getitemList() {
+   
+    public Set<PurchaseItem> getItemList() {
         return itemList;
     }
     
     public Double getTotalValue() {
         double valueOrder = 0;
-        for (PurchaseItem item : getitemList()) {
+        for (PurchaseItem item : getItemList()) {
             valueOrder = item.getSubTotal();
         }
-
         return valueOrder;
     }
 

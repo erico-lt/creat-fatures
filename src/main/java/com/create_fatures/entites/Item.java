@@ -10,6 +10,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 
 @Entity
 @Table(name = "tb_Item")
@@ -22,6 +23,7 @@ public class Item implements Serializable {
     private String name;   
     private Double price;  
 
+    @Transient
     @OneToMany(mappedBy = "id.item")
     private Set<PurchaseItem> purchaseItem = new HashSet<>();   
 

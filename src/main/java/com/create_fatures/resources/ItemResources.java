@@ -21,6 +21,7 @@ public class ItemResources {
 
     @GetMapping
     public ResponseEntity<List<Item>> findAll() {
+        
         return ResponseEntity.ok().body(itemServices.findAll());
     }
 

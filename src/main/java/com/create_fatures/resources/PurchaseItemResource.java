@@ -19,17 +19,16 @@ public class PurchaseItemResource {
     @Autowired
     private PurchaseItemServices purchaseItemServices;
 
-    @GetMapping(value = "/{id}")
-    public ResponseEntity<PurchaseItem> findById(@PathVariable Long id) {
-
-        return ResponseEntity.ok().body(purchaseItemServices.findById(id));
-    }
-    
-
     @GetMapping
     public ResponseEntity<List<PurchaseItem>> findAll() {
         
         return ResponseEntity.ok().body(purchaseItemServices.findAll());
     }
+
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<PurchaseItem> findById(@PathVariable Long id) {
+
+        return ResponseEntity.ok().body(purchaseItemServices.findById(id));
+    }   
     
 }

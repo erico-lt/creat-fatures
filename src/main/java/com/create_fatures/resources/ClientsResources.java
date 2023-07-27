@@ -18,15 +18,15 @@ public class ClientsResources {
     
     @Autowired
     private ClientsServices clientsServices;
+    
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<Clients> findById(@PathVariable Long id) {
+        return ResponseEntity.ok().body(clientsServices.findById(id));
+    }
 
     @GetMapping
     public ResponseEntity<List<Clients>> findAll() {
 
         return ResponseEntity.ok().body(clientsServices.findAll());
-    }
-
-    @GetMapping(value = "/{id}")
-    public ResponseEntity<Clients> findById(@PathVariable Long id) {
-        return ResponseEntity.ok().body(clientsServices.findById(id));
     }
 }
