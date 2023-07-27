@@ -4,13 +4,14 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import jakarta.persistence.Transient;
 
 @Entity
 @Table(name = "tb_Item")
@@ -23,7 +24,6 @@ public class Item implements Serializable {
     private String name;   
     private Double price;  
 
-    @Transient
     @OneToMany(mappedBy = "id.item")
     private Set<PurchaseItem> purchaseItem = new HashSet<>();   
 
@@ -60,6 +60,7 @@ public class Item implements Serializable {
         this.price = price;
     }
 
+    @JsonIgnore
     public Set<PurchaseItem> getPurchaseItem() {
         return purchaseItem;
     } 

@@ -1,11 +1,16 @@
 package com.create_fatures.entites;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -21,6 +26,9 @@ public class Clients  implements Serializable{
     private String email;
     private String address;    
     private String cpf_cnpj;
+
+    @OneToMany(mappedBy = "client")
+    private Set<Order> listOrder = new HashSet<>();    
 
     public Clients() {       
     }  
@@ -80,6 +88,11 @@ public class Clients  implements Serializable{
 
     public void setCpf_cnpj(String cpf_cnpj) {
         this.cpf_cnpj = cpf_cnpj;
+    }
+
+    @JsonIgnore
+    public Set<Order> getListOrder() {
+        return listOrder;
     }
 
     @Override

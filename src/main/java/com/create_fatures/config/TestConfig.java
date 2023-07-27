@@ -1,6 +1,7 @@
 package com.create_fatures.config;
 
 import java.time.Instant;
+import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -39,17 +40,19 @@ public class TestConfig implements CommandLineRunner {
 
         clientsRepository.save(c1);
 
-        Item item1 = new Item(null, "Tv Plasma", 1800.00);
+        Item i1 = new Item(null, "Tv Plasma", 50.00);
+        Item i2 = new Item(null, "Mouse", 20.00);
 
-        itemRepository.save(item1);
+        itemRepository.saveAll(Arrays.asList(i1,i2));
 
-        Order order = new Order(null, Instant.now());
+        Order order = new Order(null, Instant.now(), c1);
 
         orderRepository.save(order);
 
-        PurchaseItem puItem = new PurchaseItem(order, item1, 1, item1.getPrice());
+        PurchaseItem item1 = new PurchaseItem(order, i1, 2, i1.getPrice());
+        PurchaseItem item2 = new PurchaseItem(order, i2, 2, i2.getPrice());
 
-        purchaseItemRepository.save(puItem);
+        purchaseItemRepository.saveAll(Arrays.asList(item1, item2));
 
     }
 

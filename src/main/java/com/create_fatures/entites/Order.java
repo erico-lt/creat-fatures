@@ -10,6 +10,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
@@ -23,22 +24,33 @@ public class Order {
     private Long id;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-HH", timezone = "GMT")
-    private Instant date;
+    private Instant date;       
 
-    @Transient
     @OneToMany(mappedBy = "id.purchaseOrder")
     private Set<PurchaseItem> itemList = new HashSet<>();
-    
+
+    @ManyToOne
+    private Clients client;   
+
     @Transient
     private Set<Installment> listInstallment = new HashSet<>();
 
     public Order() {
     }
 
-    public Order(Long id, Instant date) {
+    public Order(Long id, Instant date, Clients client) {
         this.setId(id);
         this.setDate(date);        
+        this.setClients(client);
     }
+    
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }   
 
     public Instant getDate() {
         return date;
@@ -48,22 +60,22 @@ public class Order {
         this.date = date;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-   
     public Set<PurchaseItem> getItemList() {
         return itemList;
     }
+     
+    public Clients getClients() {
+        return client;
+    }
+
+    public void setClients(Clients client) {
+        this.client = client;
+    }
     
-    public Double getTotalValue() {
+    public Double getTotalValue() {     
         double valueOrder = 0;
         for (PurchaseItem item : getItemList()) {
-            valueOrder = item.getSubTotal();
+            valueOrder += item.getSubTotal();
         }
         return valueOrder;
     }
