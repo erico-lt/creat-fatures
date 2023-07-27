@@ -12,8 +12,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import jakarta.persistence.Transient;
 
 @Entity
 @Table(name = "tb_order")
@@ -24,16 +24,16 @@ public class Order {
     private Long id;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-HH", timezone = "GMT")
-    private Instant date;       
+    private Instant date;   
+    
+    @ManyToOne
+    private Clients client; 
 
     @OneToMany(mappedBy = "id.purchaseOrder")
-    private Set<PurchaseItem> itemList = new HashSet<>();
+    private Set<PurchaseItem> itemList = new HashSet<>();    
 
-    @ManyToOne
-    private Clients client;   
-
-    @Transient
-    private Set<Installment> listInstallment = new HashSet<>();
+    @OneToOne(mappedBy = "order")
+    private Installment listInstallment;
 
     public Order() {
     }
@@ -60,6 +60,14 @@ public class Order {
         this.date = date;
     }
 
+    public Installment getListInstallment() {
+        return listInstallment;
+    }
+
+    public void setListInstallment(Installment listInstallment) {
+        this.listInstallment = listInstallment;
+    }
+
     public Set<PurchaseItem> getItemList() {
         return itemList;
     }
@@ -78,7 +86,7 @@ public class Order {
             valueOrder += item.getSubTotal();
         }
         return valueOrder;
-    }
+    }       
 
     @Override
     public int hashCode() {
@@ -103,8 +111,5 @@ public class Order {
         } else if (!id.equals(other.id))
             return false;
         return true;
-    }
-
-    
-
+    }  
 }

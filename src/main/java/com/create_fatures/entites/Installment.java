@@ -1,55 +1,36 @@
 package com.create_fatures.entites;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
-public class Installment {
-    private LocalDate dueDate;
-    private double amount;
-    private Long cnpj;
-    private Long cpf;    
-    DateTimeFormatter stf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-    
-    public Installment() {
-        
-    }
-    
-    public Installment(LocalDate dueDate, double amount, Long cpf) {
-        this.setDueDate(dueDate);
-        this.setAmount(amount); 
-        this.setCpf(cpf);        
-    } 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.MapsId;
+import jakarta.persistence.Table;
 
-    public LocalDate getDueDate() {
-        return dueDate;
-    }
+@Entity
+@Table(name = "tb_installments")
+public class Installment {      
 
-    public void setDueDate(LocalDate dueDate) {
-        this.dueDate = dueDate;
+    @Id
+    private Long id;
+
+    @ManyToOne
+    @MapsId
+    private Order order;      
+ 
+    @JsonIgnore
+    public Order getOrder() {
+        return order;
     }
 
-    public double getAmount() {
-        return amount;
+    public void setOrder(Order order) {
+        this.order = order;
     }
 
-    public void setAmount(double amount) {
-        this.amount = amount;
-    }
+    public String getAmout() {
 
-    public Long getCnpj() {
-        return cnpj;
-    }
-
-    public void setCnpj(Long cnpj) {
-        this.cnpj = cnpj;
-    }
-
-     public Long getCpf() {
-        return cpf;
-    }
-
-    public void setCpf(Long cpf) {
-        this.cpf = cpf;
-    }
+        return String.format("Full value: %.2f", this.order.getTotalValue());
+    }   
 
 }
